@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useState } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import Header from './components/Header'
 import PizzaForm from './components/PizzaForm'
 import PizzaList from './containers/PizzaList'
@@ -6,17 +6,13 @@ function App() {
   const [topping, setTopping] = useState("")
   const [size, setSize] = useState("Small")
   const [vegetarian, setVegetarian] = useState(null)
-  const [nonVegetarian, setNonVegetarian] = useState(null)
+  const [pizzas, setPizzas] = useState([])
 
-  function changeVegetarianState(event) {
-    setVegetarian(event.target.value)
-    setNonVegetarian(null)
-  }
-
-  function changeNonVegetarianState(event) {
-    setNonVegetarian(event.target.value)
-    setVegetarian(null)
-  }
+  useEffect(() => {
+    fetch('http://localhost:3000/pizzas')
+      .then(response => response.json())
+      .then(setPizzas)
+  }, [])
 
   const pizzaForm = [
     topping,
@@ -24,16 +20,14 @@ function App() {
     size,
     setSize,
     vegetarian,
-    nonVegetarian,
-    changeVegetarianState,
-    changeNonVegetarianState
+    setVegetarian
   ]
 
   return (
     <Fragment>
       <Header />
       <PizzaForm pizzaForm={[...pizzaForm]} />
-      <PizzaList />
+      <PizzaList pizzas={pizzas} />
     </Fragment>
   );
 }

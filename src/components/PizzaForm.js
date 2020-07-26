@@ -6,9 +6,7 @@ const PizzaForm = ({ pizzaForm }) => {
     size,
     setSize,
     vegetarian,
-    nonVegetarian,
-    changeVegetarianState,
-    changeNonVegetarianState
+    setVegetarian
   ] = pizzaForm
 
   return (
@@ -36,7 +34,7 @@ const PizzaForm = ({ pizzaForm }) => {
             type="radio"
             value="Vegetarian"
             checked={vegetarian}
-            onClick={changeVegetarianState} />
+            onClick={() => setVegetarian(true)} />
           <label className="form-check-label">
             Vegetarian
             </label>
@@ -45,15 +43,15 @@ const PizzaForm = ({ pizzaForm }) => {
           <input
             className="form-check-input"
             type="radio" value="Not Vegetarian"
-            checked={nonVegetarian}
-            onClick={changeNonVegetarianState} />
+            checked={!vegetarian}
+            onClick={() => setVegetarian(false)} />
           <label className="form-check-label">
             Not Vegetarian
             </label>
         </div>
       </div>
       <div className="col">
-        <button type="submit" className="btn btn-success" onClick={() => console.log('State: ', topping, size, vegetarian, nonVegetarian)}>Submit</button>
+        <button type="submit" className="btn btn-success" onClick={() => console.log('State: ', topping, size, vegetarian)}>Submit</button>
       </div>
     </div>
 
